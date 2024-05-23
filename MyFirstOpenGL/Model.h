@@ -1,17 +1,34 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <vector>
+#include <glm.hpp>
 #include <GL/glew.h>
+#include <vector>
+#include <sstream>
+#include <fstream>
+#include <iostream>
 
-class Model {
-public:
-    Model(const std::vector<float>& vertexs, const std::vector<float>& uvs, const std::vector<float>& normals);
-    void Render() const;
-
+class Model
+{
 private:
+
     GLuint VAO, VBO, uvVBO, normalsVBO;
+    GLuint colorVBO;
     unsigned int numVertexs;
+
+public:
+
+    // Constructor for game objects with texture
+    Model(const std::vector<float>& _vertexs, const std::vector<float>& _uvs, const std::vector<float>& _normals);
+    // Constructor for primitives
+    Model(const std::vector<float>& _vertexs);
+
+    // GETTERS 
+    GLuint GetVAO();
+    GLuint GetVBO();
+    GLuint GetUvVBO();
+    unsigned int GetNumVertexs();
+
 };
 
 #endif
