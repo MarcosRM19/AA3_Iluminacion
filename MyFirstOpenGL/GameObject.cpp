@@ -1,8 +1,9 @@
 #include "GameObject.h"
 
-GameObject::GameObject(GLuint _program, Transform _transform, glm::vec4 _color,
+GameObject::GameObject(GLuint _program, glm::vec3 position, glm::vec4 _color,
 	GLint modelVAO, GLint modelNumVertex, Texture* _texture, GLuint _renderMode)
-	: Object(_transform), program(_program), color(_color), modelVAO(modelVAO), modelNumVertex(modelNumVertex), texture(_texture), renderMode(_renderMode)
+	: Object(Transform(position, glm::vec3(0.f, 1.f, 0.f), glm::vec3(0.5f))),
+		program(_program), color(_color), modelVAO(modelVAO), modelNumVertex(modelNumVertex), texture(_texture), renderMode(_renderMode)
 {};
 
 

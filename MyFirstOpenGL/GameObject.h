@@ -19,7 +19,7 @@ private:
 public:
 
 	GameObject(GLuint _program,
-		Transform _transform, glm::vec4 _color,
+		glm::vec3 position, glm::vec4 _color,
 		GLint modelVAO, GLint modelNumVertex, Texture* texture, GLuint _renderMode);
 
 
