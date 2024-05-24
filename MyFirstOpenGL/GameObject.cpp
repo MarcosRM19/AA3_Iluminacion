@@ -1,8 +1,8 @@
 #include "GameObject.h"
 
 GameObject::GameObject(GLuint _program, glm::vec3 position, glm::vec4 _color,
-	GLint modelVAO, GLint modelNumVertex, Texture* _texture, GLuint _renderMode)
-	: Object(Transform(position, glm::vec3(0.f, 1.f, 0.f), glm::vec3(0.5f))),
+	GLint modelVAO, GLint modelNumVertex, Texture* _texture, GLuint _renderMode, float maxScale, float minScale)
+	: Object(Transform(position, glm::vec3(0.f, rand() % 360 + 1, 0.f), glm::vec3(minScale + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maxScale - minScale)))))),
 		program(_program), color(_color), modelVAO(modelVAO), modelNumVertex(modelNumVertex), texture(_texture), renderMode(_renderMode)
 {};
 
