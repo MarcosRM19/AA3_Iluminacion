@@ -4,7 +4,7 @@ ObjectManager::~ObjectManager()
 {
 	delete camera;
 
-	for (glm::vec3* sPoint : spawnPoints)
+	for (SpawnPoint* sPoint : spawnPoints)
 		delete sPoint;
 
 	for (GameObject* gObj : gameObjects)
@@ -13,10 +13,9 @@ ObjectManager::~ObjectManager()
 
 void ObjectManager::CreateSpwanPoint()
 {
-	spawnPoints.push_back(new glm::vec3(0.f, 0.f, 0.f));
-	spawnPoints.push_back(new glm::vec3(0.5f, 0.f, 0.f));
-	spawnPoints.push_back(new glm::vec3(-0.5f, 0.f, 0.f));
-
+	spawnPoints.push_back(new SpawnPoint(Transform(glm::vec3(0.f, 0.f, 0.f))));
+	spawnPoints.push_back(new SpawnPoint(Transform(glm::vec3(0.5f, 0.f, 0.f))));
+	spawnPoints.push_back(new SpawnPoint(Transform(glm::vec3(-0.5f, 0.f, 0.f))));
 }
 
 void ObjectManager::CreateObjects()
@@ -63,23 +62,36 @@ void ObjectManager::CreateObjects()
 		MODEL_MANAGER.models[1].GetVAO(), MODEL_MANAGER.models[1].GetNumVertexs(), textureRock, GL_TRIANGLES));*/
 
 	//// CUBE
+
+	std::vector<glm::vec3*> randomSpawnPoint;
+	int randomIndex = rand() % spawnPoints.size();
+
+	for (int i = 0; i < spawnPoints.size(); i++)
+	{
+		while (spawnPoints[randomIndex]->GetModelLocated())
+		{
+			randomIndex = rand() % spawnPoints.size();
+		}		
+		randomSpawnPoint.push_back(new glm::vec3(spawnPoints[randomIndex]->GetPosition()));
+		spawnPoints[randomIndex]->SetModelLocated(true);
+	}
 	
 	Texture* textureTroll = new Texture("Assets/Textures/Troll.png", GL_TEXTURE0, 0);
 
 	gameObjects.push_back(new GameObject(PROGRAM_MANAGER.compiledPrograms[0],
-		glm::vec3(spawnPoints[0]->r, spawnPoints[0]->g, spawnPoints[0]->b),
+		glm::vec3(randomSpawnPoint[0]->r, randomSpawnPoint[0]->g, randomSpawnPoint[0]->b),
 		{ 0.5f, 1.f, 0.5f, 1.f },
-		MODEL_MANAGER.models[0].GetVAO(), MODEL_MANAGER.models[0].GetNumVertexs(), textureTroll, GL_TRIANGLES, 0.1f, 0.5f));
+		MODEL_MANAGER.models[0].GetVAO(), MODEL_MANAGER.models[0].GetNumVertexs(), textureTroll, GL_TRIANGLES, 0.1f, 0.3f));
 
 	gameObjects.push_back(new GameObject(PROGRAM_MANAGER.compiledPrograms[0],
-		glm::vec3(spawnPoints[1]->r, spawnPoints[1]->g, spawnPoints[1]->b),
+		glm::vec3(randomSpawnPoint[1]->r, randomSpawnPoint[1]->g, randomSpawnPoint[1]->b),
 		{ 1.f, 0.5f, 0.5f, 1.f },
-		MODEL_MANAGER.models[0].GetVAO(), MODEL_MANAGER.models[0].GetNumVertexs(), textureTroll, GL_TRIANGLES, 0.1f, 0.5f));
+		MODEL_MANAGER.models[0].GetVAO(), MODEL_MANAGER.models[0].GetNumVertexs(), textureTroll, GL_TRIANGLES, 0.1f, 0.3f));
 
 	gameObjects.push_back(new GameObject(PROGRAM_MANAGER.compiledPrograms[0],
-		glm::vec3(spawnPoints[2]->r, spawnPoints[2]->g, spawnPoints[2]->b),
+		glm::vec3(randomSpawnPoint[2]->r, randomSpawnPoint[2]->g, randomSpawnPoint[2]->b),
 		{ 0.5f, 0.5f, 1.f, 1.f },
-		MODEL_MANAGER.models[0].GetVAO(), MODEL_MANAGER.models[0].GetNumVertexs(), textureTroll, GL_TRIANGLES, 0.1f, 0.5f));
+		MODEL_MANAGER.models[0].GetVAO(), MODEL_MANAGER.models[0].GetNumVertexs(), textureTroll, GL_TRIANGLES, 0.1f, 0.3f));
 }
 
 void ObjectManager::Update(float _dt)
