@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "Camera.h"
+#include "SpwanPoint.h"
+
 #include "ModelManager.h"
 
 #define OBJECT_MANAGER ObjectManager::Instance()
@@ -24,8 +26,10 @@ public:
 	~ObjectManager();
 
 	Camera* camera;
+	std::vector<SpawnPoint*> spawnPoints;
 	std::vector<GameObject*> gameObjects;
 
+	void CreateSpwanPoint();
 	void CreateObjects();
 
 	void Update(float _dt);

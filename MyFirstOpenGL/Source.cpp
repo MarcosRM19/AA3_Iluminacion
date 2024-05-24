@@ -25,6 +25,7 @@ void main()
 		PROGRAM_MANAGER.PushProgram("MyFirstVertexShader.glsl", "MyFirstGeometryShader.glsl", "PrimitiveFragmentShader.glsl");
 
 		// Declarar instancia de GameObject	
+		OBJECT_MANAGER.CreateSpwanPoint();
 		OBJECT_MANAGER.CreateObjects();
 
 		// Generamos el game loop
