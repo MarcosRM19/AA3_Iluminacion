@@ -1,37 +1,21 @@
 #include "Camera.h"
 
 Camera::Camera()
-	: Object(Transform(glm::vec3(0.f), glm::vec3(0.f))),
-	fov(45.f), near(0.1f), far(10.f), angleIncrease(glm::vec3(0.f, 1.f, 0.f)), typeOfView(TypeOfView::ORBIT)
+	: Object(Transform(glm::vec3(0.f, 0.5f, 2.f), glm::vec3(0.f))),
+	fov(45.f), near(0.1f), far(10.f)
 {
-	ResetTypeOfView(typeOfView);
+	cameraFront = glm::vec3(0.f, 0.f, -1.f);
+	cameraUp = glm::vec3(0.f, 1.f, 0.f);
+	cameraSpeed = 0.05;
+	yaw = -90.f;
+	pitch = 0.0f;
+	firstMouse = true;
 };
-
-Camera::Camera(Transform _transform, float _fov, float _near, float _far,
-	glm::vec3 _centerOfView, float _distanceToCenter, glm::vec3 _eyeOrientation, glm::vec3 _angleIncrease)
-	: Object(_transform), fov(_fov), near(_near), far(_far),
-	distanceToCenter(_distanceToCenter), angleIncrease(_angleIncrease),
-	eyeOrientation(_eyeOrientation), centerOfView(_centerOfView), typeOfView(TypeOfView::ORBIT)
-{};
-
 
 void Camera::Update(float _dt)
 {
-	// 1. Calculate 
-	//CalculTypeOfView();
-
-	// 2. Update Location
-	// Convert the spherical coordinates to cartesian coordinates using the standard formula
-	transform.position =
-	{
-		eyeOrientation.x + distanceToCenter * sin(transform.rotation.y * (M_PI / 180)) * cos(transform.rotation.z * (M_PI / 180)),
-		eyeOrientation.y + distanceToCenter * sin(transform.rotation.z * (M_PI / 180)),
-		eyeOrientation.z + distanceToCenter * cos(transform.rotation.y * (M_PI / 180)) * cos(transform.rotation.z * (M_PI / 180))
-	};
-
-	// 3. Generate Matrixs
 	// Matrix generation
-	glm::mat4 view = glm::lookAt(transform.position, centerOfView, transform.up);
+	glm::mat4 view = glm::lookAt(transform.position, transform.position + cameraFront, transform.up);
 	glm::mat4 projection = glm::perspective(glm::radians(fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, near, far);
 
 	//Indicar a la tarjeta GPU que programa debe usar
@@ -45,84 +29,56 @@ void Camera::Update(float _dt)
 
 void Camera::Inputs(GLFWwindow* _window)
 {
-	if (glfwGetKey(_window, GLFW_KEY_0) == GLFW_PRESS) {
-
-		ResetTypeOfView(TypeOfView::ORBIT);
+	if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) 
+	{
+		transform.position += cameraFront * cameraSpeed;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_1) == GLFW_PRESS) {
-
-		ResetTypeOfView(TypeOfView::PLANE_TROLL_1);
+	if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) 
+	{
+		transform.position -= cameraFront * cameraSpeed;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_2) == GLFW_PRESS) {
-
-		ResetTypeOfView(TypeOfView::PLANE_TROLL_3);
+	if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) 
+	{
+		transform.position -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_3) == GLFW_PRESS) {
-		ResetTypeOfView(TypeOfView::DOLLY_ZOOM);
+	if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) 
+	{
+		transform.position += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	}
+	glfwGetCursorPos(_window, &xpos, &ypos);
+	mouse_callback(_window, xpos, ypos);
 }
 
-void Camera::ResetTypeOfView(TypeOfView _typeOfView)
+void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	typeOfView = _typeOfView;
-	switch (typeOfView)
-	{
-	case Camera::TypeOfView::ORBIT:
-
-		transform.rotation = glm::vec3(0.f);
-		centerOfView = glm::vec3(0.f, 0.25f, 1.2f);
-		eyeOrientation = centerOfView + glm::vec3(0.f, 0.5f, 0.f);
-		distanceToCenter = 1.25f;
-		fov = 45.0f;
-
-		break;
-	case Camera::TypeOfView::PLANE_TROLL_1:
-
-		transform.rotation = glm::vec3(0.f, 80.f, 0.f);
-		centerOfView = glm::vec3(-0.2f, 0.25f, 1.3f) + glm::vec3(0.f, 0.1f, 0.f);
-		eyeOrientation = centerOfView;
-		distanceToCenter = 0.4f;
-		fov = 45.f;
-
-		break;
-	case Camera::TypeOfView::PLANE_TROLL_3:
-
-		transform.rotation = glm::vec3(0.f, 280.f, 0.f);
-		centerOfView = glm::vec3(0.2f, 0.25f, 1.3f) + glm::vec3(0.f, 0.19f, 0.f);
-		eyeOrientation = centerOfView;
-		distanceToCenter = 0.4f;
-		fov = 10.f;
-
-		break;
-	case Camera::TypeOfView::DOLLY_ZOOM:
-
-		transform.rotation = glm::vec3(0.f, 1.f, 0.f);
-		centerOfView = glm::vec3(0.f, 0.25f, 1.1f) + glm::vec3(0.f, 0.25f, 0.f);
-		eyeOrientation = centerOfView + glm::vec3(0.f, 0.f, 0.f);
-		distanceToCenter = 0.85f;
-
-		break;
-	default:
-		break;
+	if (firstMouse) {
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
 	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // Invertido porque los sistemas de coordenadas de Y van al revés
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.1f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	// Asegurarse de que pitch no pase de los límites
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front.y = sin(glm::radians(pitch));
+	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(front);
 }
-void Camera::CalculTypeOfView()
-{
-	switch (typeOfView)
-	{
-	case Camera::TypeOfView::ORBIT:
-		transform.rotation += angleIncrease * scaleTime;
-		break;
 
-	case Camera::TypeOfView::DOLLY_ZOOM:
-		distanceToCenter -= 0.001f;
-		fov = 2.0f * atan(0.75 * 0.5f / distanceToCenter) * 360 / (M_PI * 2);
-
-		if (distanceToCenter < 0.4f)
-			ResetTypeOfView(TypeOfView::ORBIT);
-		break;
-
-	default:
-		break;
-	}
-};
