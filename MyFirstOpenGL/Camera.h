@@ -27,6 +27,9 @@ private:
 	void ResetTypeOfView(TypeOfView _typeOfView);
 	void CalculTypeOfView();
 
+	double xpos, ypos;
+	double lastXpos, lastYpos;
+
 public:
 
 	Camera();

@@ -2,9 +2,15 @@
 
 Camera::Camera()
 	: Object(Transform(glm::vec3(0.f), glm::vec3(0.f))),
-	fov(45.f), near(0.1f), far(10.f), angleIncrease(glm::vec3(0.f, 1.f, 0.f)), typeOfView(TypeOfView::ORBIT)
+	fov(0.f), near(0.1f), far(10.f), angleIncrease(glm::vec3(0.f, 1.f, 0.f)), typeOfView(TypeOfView::ORBIT)
 {
 	ResetTypeOfView(typeOfView);
+	transform.position =
+	{
+		eyeOrientation.x + distanceToCenter * sin(transform.rotation.y * (M_PI / 180)) * cos(transform.rotation.z * (M_PI / 180)),
+		eyeOrientation.y + distanceToCenter * sin(transform.rotation.z * (M_PI / 180)),
+		eyeOrientation.z + distanceToCenter * cos(transform.rotation.y * (M_PI / 180)) * cos(transform.rotation.z * (M_PI / 180))
+	};
 };
 
 Camera::Camera(Transform _transform, float _fov, float _near, float _far,
@@ -17,19 +23,6 @@ Camera::Camera(Transform _transform, float _fov, float _near, float _far,
 
 void Camera::Update(float _dt)
 {
-	// 1. Calculate 
-	//CalculTypeOfView();
-
-	// 2. Update Location
-	// Convert the spherical coordinates to cartesian coordinates using the standard formula
-	transform.position =
-	{
-		eyeOrientation.x + distanceToCenter * sin(transform.rotation.y * (M_PI / 180)) * cos(transform.rotation.z * (M_PI / 180)),
-		eyeOrientation.y + distanceToCenter * sin(transform.rotation.z * (M_PI / 180)),
-		eyeOrientation.z + distanceToCenter * cos(transform.rotation.y * (M_PI / 180)) * cos(transform.rotation.z * (M_PI / 180))
-	};
-
-	// 3. Generate Matrixs
 	// Matrix generation
 	glm::mat4 view = glm::lookAt(transform.position, centerOfView, transform.up);
 	glm::mat4 projection = glm::perspective(glm::radians(fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, near, far);
@@ -45,20 +38,40 @@ void Camera::Update(float _dt)
 
 void Camera::Inputs(GLFWwindow* _window)
 {
-	if (glfwGetKey(_window, GLFW_KEY_0) == GLFW_PRESS) {
+	if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) {
 
-		ResetTypeOfView(TypeOfView::ORBIT);
+		transform.position.z -= 0.01;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_1) == GLFW_PRESS) {
+	if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) {
 
-		ResetTypeOfView(TypeOfView::PLANE_TROLL_1);
+		transform.position.z += 0.01;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_2) == GLFW_PRESS) {
+	if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) {
 
-		ResetTypeOfView(TypeOfView::PLANE_TROLL_3);
+
 	}
-	if (glfwGetKey(_window, GLFW_KEY_3) == GLFW_PRESS) {
-		ResetTypeOfView(TypeOfView::DOLLY_ZOOM);
+	if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) {
+
+
+	}
+	lastXpos = xpos;
+	lastYpos = ypos;
+	glfwGetCursorPos(_window, &xpos, &ypos);
+	if (xpos > lastXpos)
+	{
+		std::cout << "Derecha" << std::endl;
+	}
+	if (xpos < lastXpos)
+	{
+		std::cout << "Izquierda" << std::endl;
+	}
+	if (ypos < lastYpos)
+	{
+		std::cout << "Arriba" << std::endl;
+	}
+	if (ypos > lastYpos)
+	{
+		std::cout << "Abajo" << std::endl;
 	}
 }
 
