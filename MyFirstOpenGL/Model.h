@@ -32,12 +32,7 @@ public:
     void Render();
 
     // GETTERS 
-    GLuint GetVAO();
-    GLuint GetVBO();
-    GLuint GetUvVBO();
     GLuint GetProgram();
-    unsigned int GetNumVertexs();
-
 };
 
 #endif

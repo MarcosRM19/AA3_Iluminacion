@@ -87,27 +87,7 @@ void Model::Render()
     glBindVertexArray(0);
 }
 
-GLuint Model::GetVAO()
-{
-    return VAO;
-}
-
-GLuint Model::GetVBO()
-{
-    return VBO;
-}
-
-GLuint Model::GetUvVBO()
-{
-    return uvVBO;
-}
-
 GLuint Model::GetProgram()
 {
     return program;
-}
-
-unsigned int Model::GetNumVertexs()
-{
-    return numVertexs; 
 }

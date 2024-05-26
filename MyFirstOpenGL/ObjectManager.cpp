@@ -47,13 +47,9 @@ void ObjectManager::CreateObjects()
 
 	//Sun and Moon
 
-	//orbitPrimitive.push_back(new OrbitPrimitive(PROGRAM_MANAGER.compiledPrograms[1],
-	//	glm::vec3(0.f, -1.f, 0.f),{ 1.f, .6f, 0.f, 0.f },
-	//	MODEL_MANAGER.models[2].GetVAO(), MODEL_MANAGER.models[2].GetNumVertexs(), GL_TRIANGLE_STRIP, 0));
+	orbitPrimitive.push_back(new OrbitPrimitive({ 1.f, .6f, 0.f, 0.f }, MODEL_MANAGER.models[2], 0.f, 1.f, 20.f));
 
-	//orbitPrimitive.push_back(new OrbitPrimitive(PROGRAM_MANAGER.compiledPrograms[1],
-	//	glm::vec3(0.f, 1.f, 0.f), { 0.1f, 0.3f, 0.4f, 0.f },
-	//	MODEL_MANAGER.models[2].GetVAO(), MODEL_MANAGER.models[2].GetNumVertexs(), GL_TRIANGLE_STRIP, M_PI));
+	orbitPrimitive.push_back(new OrbitPrimitive({ 0.1f, 0.3f, 0.4f, 0.f }, MODEL_MANAGER.models[2], M_PI, 1.f, 20.f));
 }
 
 void ObjectManager::Update(float _dt)
@@ -69,6 +65,5 @@ void ObjectManager::Update(float _dt)
 	for (OrbitPrimitive* oPrimitive : orbitPrimitive)
 	{
 		oPrimitive->Update(_dt);
-		oPrimitive->Render();
 	}
 }

@@ -1,6 +1,5 @@
 #include "Object.h"
 
-inline void Object::StopMovement()
-{
-	scaleTime = 0.f;
-}
+Object::Object(Transform _transform)
+	: transform(_transform){};
+

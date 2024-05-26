@@ -9,22 +9,18 @@
 #include "Transform.h"
 #include "MatrixUtilities.h"
 
+#include "Texture.h"
+#include "Model.h"
+
 class Object
 {
 protected:
-
 	Transform transform;
-	float scaleTime; // 0 < scaleTime < n 
 
 public:
-
-	Object(Transform _transform, float _scaleTime = 1.f)
-		:transform(_transform), scaleTime(_scaleTime)
-	{};
+	Object(Transform _transform);
 
 	virtual void Update(float _dt) = 0;
-
-	inline void StopMovement();
 };
 
 

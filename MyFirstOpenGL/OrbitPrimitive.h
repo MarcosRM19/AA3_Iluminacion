@@ -4,20 +4,15 @@
 class OrbitPrimitive : public Object
 {
 private:
-
-    GLint modelVAO, modelNumVertex;
-    GLuint renderMode;
-
-    GLuint program;
     glm::vec4 color;
+    Model model;
 
-    float initAngle, elapsedTime;
+    float initAngle, elapsedTime, radius, orbitTime;
 
 public:
-    OrbitPrimitive(GLuint _program, glm::vec3 position, glm::vec4 _color, GLint modelVAO, GLint modelNumVertex, GLuint _renderMode, float initAngle);
+    OrbitPrimitive(glm::vec4 _color, Model model, float initAngle, float radius, float orbitTime);
     
     virtual void Update(float _dt) override;
-    virtual void Render();
 
     void CalculateOrbit(float _dt);
 };

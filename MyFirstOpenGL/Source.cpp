@@ -29,7 +29,6 @@ void main()
 		OBJECT_MANAGER.CreateSpwanPoint();
 		OBJECT_MANAGER.CreateObjects();
 
-
 		// Generamos el game loop
 		while (!glfwWindowShouldClose(GL_MANAGER.window))
 		{

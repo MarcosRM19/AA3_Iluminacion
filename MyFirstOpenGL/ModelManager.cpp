@@ -23,7 +23,7 @@ ModelManager::ModelManager()
 		+0.2f, -0.2f, +0.2f, // 4
 		-0.2f, +0.2f, +0.2f, // 1
 		+0.2f, +0.2f, +0.2f  // 0
-		}, PROGRAM_MANAGER.compiledPrograms[0], nullptr, GL_TRIANGLES)
+		}, PROGRAM_MANAGER.compiledPrograms[1], nullptr, GL_TRIANGLE_STRIP)
 	);
 }
 
