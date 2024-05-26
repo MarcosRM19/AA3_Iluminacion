@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 Camera::Camera()
-	: Object(Transform(glm::vec3(0.f, 0.5f, 2.f), glm::vec3(0.f))),
+	: Object(Transform(glm::vec3(0.f, 0.5f, 4.f), glm::vec3(0.f))),
 	fov(45.f), near(0.1f), far(10.f)
 {
 	cameraFront = glm::vec3(0.f, 0.f, -1.f);
