@@ -70,7 +70,7 @@ void ObjectManager::CreateObjects()
 void ObjectManager::Update(float _dt)
 {
 	camera->Update(_dt);
-	camera->Inputs(GL_MANAGER.window);
+	camera->Inputs(GL_MANAGER.window, _dt);
 
 	for (GameObject* gObj : gameObjects)
 	{

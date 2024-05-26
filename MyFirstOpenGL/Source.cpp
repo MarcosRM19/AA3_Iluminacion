@@ -40,7 +40,7 @@ void main()
 
 			TIME_MANAGER.Update();
 
-			OBJECT_MANAGER.Update(TIME_MANAGER.GetElapsedTime());
+			OBJECT_MANAGER.Update(TIME_MANAGER.GetDeltaTime());
 
 			// Cambiamos buffers
 			glFlush();

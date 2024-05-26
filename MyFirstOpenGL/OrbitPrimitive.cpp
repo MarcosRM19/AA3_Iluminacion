@@ -3,7 +3,9 @@
 OrbitPrimitive::OrbitPrimitive(GLuint _program, glm::vec3 position, glm::vec4 _color,  GLint modelVAO, GLint modelNumVertex, GLuint _renderMode, float initAngle)
     : Object(Transform(position, glm::vec3(0.f, 1.f, 0.f), glm::vec3(0.3))), modelVAO(modelVAO), modelNumVertex(modelNumVertex), renderMode(_renderMode),
 	program(_program), color(_color), initAngle(initAngle)
-{}
+{
+	elapsedTime = 0.0f;
+}
 
 void OrbitPrimitive::Update(float _dt)
 {
@@ -45,7 +47,8 @@ void OrbitPrimitive::Render()
 
 void OrbitPrimitive::CalculateOrbit(float _dt)
 {
-	float angle = initAngle + 2.0f * M_PI * (_dt / 20.f);
+	elapsedTime += _dt;
+	float angle = initAngle + 2.0f * M_PI * (elapsedTime / 20.f);
 	transform.position.x = 1.f * cos(angle);
 	transform.position.y = 1.f * sin(angle);
 }

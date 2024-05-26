@@ -14,8 +14,6 @@ private:
 	double lastX, lastY, xpos, ypos;
 	bool firstMouse;
 
-	glm::vec3 cameraFront;
-	glm::vec3 cameraUp;
 	float cameraSpeed;
 
 	float yaw, pitch;
@@ -26,7 +24,7 @@ public:
 
 	virtual void Update(float _dt) override;
 
-	void Inputs(GLFWwindow* _window);
+	void Inputs(GLFWwindow* _window, float _dt);
 
 	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 };

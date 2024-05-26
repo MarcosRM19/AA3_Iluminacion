@@ -4,9 +4,7 @@ Camera::Camera()
 	: Object(Transform(glm::vec3(0.f, 0.5f, 4.f), glm::vec3(0.f))),
 	fov(45.f), near(0.1f), far(10.f)
 {
-	cameraFront = glm::vec3(0.f, 0.f, -1.f);
-	cameraUp = glm::vec3(0.f, 1.f, 0.f);
-	cameraSpeed = 0.05;
+	cameraSpeed = 1;
 	yaw = -90.f;
 	pitch = 0.0f;
 	firstMouse = true;
@@ -15,7 +13,7 @@ Camera::Camera()
 void Camera::Update(float _dt)
 {
 	// Matrix generation
-	glm::mat4 view = glm::lookAt(transform.position, transform.position + cameraFront, transform.up);
+	glm::mat4 view = glm::lookAt(transform.position, transform.position + transform.forward, transform.up);
 	glm::mat4 projection = glm::perspective(glm::radians(fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, near, far);
 
 	//Indicar a la tarjeta GPU que programa debe usar
@@ -27,23 +25,23 @@ void Camera::Update(float _dt)
 	}
 }
 
-void Camera::Inputs(GLFWwindow* _window)
+void Camera::Inputs(GLFWwindow* _window, float _dt)
 {
 	if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) 
 	{
-		transform.position += cameraFront * cameraSpeed;
+		transform.position += transform.forward * cameraSpeed * _dt;
 	}
 	if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) 
 	{
-		transform.position -= cameraFront * cameraSpeed;
+		transform.position -= transform.forward * cameraSpeed * _dt;
 	}
 	if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) 
 	{
-		transform.position -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		transform.position -= glm::normalize(glm::cross(transform.forward, transform.up)) * cameraSpeed * _dt;
 	}
 	if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) 
 	{
-		transform.position += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		transform.position += glm::normalize(glm::cross(transform.forward, transform.up)) * cameraSpeed * _dt;
 	}
 	glfwGetCursorPos(_window, &xpos, &ypos);
 	mouse_callback(_window, xpos, ypos);
@@ -79,6 +77,6 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 	front.y = sin(glm::radians(pitch));
 	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(front);
+	transform.forward = glm::normalize(front);
 }
 

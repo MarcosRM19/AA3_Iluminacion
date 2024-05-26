@@ -11,7 +11,7 @@ private:
     GLuint program;
     glm::vec4 color;
 
-    float initAngle;
+    float initAngle, elapsedTime;
 
 public:
     OrbitPrimitive(GLuint _program, glm::vec3 position, glm::vec4 _color, GLint modelVAO, GLint modelNumVertex, GLuint _renderMode, float initAngle);

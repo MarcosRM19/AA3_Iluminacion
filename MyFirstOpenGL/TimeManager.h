@@ -12,7 +12,7 @@ private:
 	TimeManager(const TimeManager&) = delete;
 	TimeManager& operator =(const TimeManager&) = delete;
 
-	float elapsedTime, lastFrameTime ,currentFrameTime, deltaTime; 
+	float lastFrameTime ,currentFrameTime, deltaTime; 
 
 public:
 
@@ -24,6 +24,6 @@ public:
 
 	void Update();
 
-	float GetElapsedTime();
+	float GetDeltaTime();
 
 };
