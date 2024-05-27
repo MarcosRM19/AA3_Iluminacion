@@ -30,6 +30,14 @@ void OrbitPrimitive::Update(float _dt)
 
 	// Pasar el color en que queremos pintar el game object
 	glUniform4fv(glGetUniformLocation(model.GetProgram(), "ambientColor"), 1, glm::value_ptr(color));
+
+	if (transform.position.y > 0)
+	{
+		glUseProgram(PROGRAM_MANAGER.compiledPrograms[0]);
+		glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "sourceLight"), 1, glm::value_ptr(transform.position));
+		glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "t"), 0);
+	}
+
 }
 
 void OrbitPrimitive::CalculateOrbit(float _dt)
