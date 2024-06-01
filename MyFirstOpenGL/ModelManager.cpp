@@ -5,7 +5,9 @@ ModelManager::ModelManager()
 	Texture* textureTroll = new Texture("Assets/Textures/Troll.png", GL_TEXTURE0, 0);
 
 	models.push_back(LoadOBJModel("Assets/Models/Troll.obj", PROGRAM_MANAGER.compiledPrograms[0], textureTroll, GL_TRIANGLES));
-	models.push_back(LoadOBJModel("Assets/Models/Rock.obj", PROGRAM_MANAGER.compiledPrograms[0], textureTroll, GL_TRIANGLES));
+
+	Texture* textureRock = new Texture("Assets/Textures/Rock.png", GL_TEXTURE1, 1);
+	models.push_back(LoadOBJModel("Assets/Models/Rock.obj", PROGRAM_MANAGER.compiledPrograms[0], textureRock, GL_TRIANGLES));
 
 	models.push_back(LoadPrimitive(
 		{

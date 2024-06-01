@@ -4,7 +4,7 @@ ObjectManager::~ObjectManager()
 {
 	delete camera;
 
-	for (SpawnPoint* sPoint : spawnPoints)
+	for (glm::vec3* sPoint : spawnPoints)
 		delete sPoint;
 
 	for (GameObject* gObj : gameObjects)
@@ -16,9 +16,9 @@ ObjectManager::~ObjectManager()
 
 void ObjectManager::CreateSpwanPoint()
 {
-	spawnPoints.push_back(new SpawnPoint(Transform(glm::vec3(0.f, 0.f, 0.f))));
-	//spawnPoints.push_back(new SpawnPoint(Transform(glm::vec3(0.5f, 0.f, 0.f))));
-	//spawnPoints.push_back(new SpawnPoint(Transform(glm::vec3(-0.5f, 0.f, 0.f))));
+	spawnPoints.push_back(new glm::vec3(0.f, 0.f, 0.f));
+	spawnPoints.push_back(new glm::vec3(0.5f, 0.f, 0.f));
+	//spawnPoints.push_back(new glm::vec3(-0.5f, 0.f, 0.f));
 }
 
 void ObjectManager::CreateObjects()
@@ -26,24 +26,11 @@ void ObjectManager::CreateObjects()
 	// 1. Set Camera
 	camera = new Camera();
 
-	std::vector<glm::vec3*> randomSpawnPoint;
-	int randomIndex = rand() % spawnPoints.size();
+	gameObjects.push_back(new GameObject(GetRandomPosition(), {1.f, 1.f, 1.f, 1.f}, 0.1f, 0.3f, MODEL_MANAGER.models[0]));
 
-	for (int i = 0; i < spawnPoints.size(); i++)
-	{
-		while (spawnPoints[randomIndex]->GetModelLocated())
-		{
-			randomIndex = rand() % spawnPoints.size();
-		}		
-		randomSpawnPoint.push_back(new glm::vec3(spawnPoints[randomIndex]->GetPosition()));
-		spawnPoints[randomIndex]->SetModelLocated(true);
-	}
+	gameObjects.push_back(new GameObject(GetRandomPosition(), {1.f, 0.5f, 0.5f, 1.f}, 0.1f, 0.3f, MODEL_MANAGER.models[1]));
 
-	gameObjects.push_back(new GameObject(glm::vec3(randomSpawnPoint[0]->r, randomSpawnPoint[0]->g, randomSpawnPoint[0]->b), { 1.f, 1.f, 1.f, 1.f }, 0.1f, 0.3f, MODEL_MANAGER.models[0]));
-
-	//gameObjects.push_back(new GameObject(glm::vec3(randomSpawnPoint[1]->r, randomSpawnPoint[1]->g, randomSpawnPoint[1]->b), { 1.f, 0.5f, 0.5f, 1.f }, 0.1f, 0.3f, MODEL_MANAGER.models[0]));
-
-	//gameObjects.push_back(new GameObject(glm::vec3(randomSpawnPoint[2]->r, randomSpawnPoint[2]->g, randomSpawnPoint[2]->b), { 0.5f, 0.5f, 1.f, 1.f }, 0.1f, 0.3f, MODEL_MANAGER.models[0]));
+	//gameObjects.push_back(new GameObject(GetRandomPosition(), {0.5f, 0.5f, 1.f, 1.f}, 0.1f, 0.3f, MODEL_MANAGER.models[0]));
 
 	//Sun and Moon
 
@@ -66,4 +53,15 @@ void ObjectManager::Update(float _dt)
 	{
 		oPrimitive->Update(_dt);
 	}
+}
+
+glm::vec3 ObjectManager::GetRandomPosition()
+{
+	glm::vec3 randomPosition;
+	int randomIndex = rand() % spawnPoints.size();
+
+	randomPosition = glm::vec3(spawnPoints[randomIndex]->r, spawnPoints[randomIndex]->g, spawnPoints[randomIndex]->b);
+	spawnPoints.erase(spawnPoints.begin() + randomIndex);
+
+	return randomPosition;
 }

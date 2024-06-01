@@ -31,7 +31,6 @@
     <ClCompile Include="ProgramManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="SpwanPoint.cpp" />
     <ClCompile Include="Stb.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
@@ -54,7 +53,6 @@
     <ClInclude Include="OrbitPrimitive.h" />
     <ClInclude Include="ProgramManager.h" />
     <ClInclude Include="ShaderProgram.h" />
-    <ClInclude Include="SpwanPoint.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Transform.h" />
