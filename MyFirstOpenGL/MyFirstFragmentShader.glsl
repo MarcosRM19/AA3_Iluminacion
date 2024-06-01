@@ -5,6 +5,9 @@ uniform sampler2D textureSampler;
 uniform vec3 sourceLight;
 uniform float t;
 
+uniform vec3 colorA;
+uniform vec3 colorB;
+
 in vec2 uvsFragmentShader;
 in vec3 normalsFragmentShader;
 in vec4 primitivePosition;
@@ -21,9 +24,6 @@ void main() {
 
             vec3 lineToLight = normalize(sourceLight - primitivePosition.xyz); 
             float sourceLightAngle = dot(normalsFragmentShader, lineToLight); 
-
-            vec3 colorA = vec3(0.0, 0.129, 0.306);
-            vec3 colorB = vec3(1.0, 0.819, 0.384);
 
             vec3 ambientColor = mix(colorA, colorB, t);
 

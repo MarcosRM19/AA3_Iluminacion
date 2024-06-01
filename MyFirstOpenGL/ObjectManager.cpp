@@ -47,9 +47,9 @@ void ObjectManager::CreateObjects()
 
 	//Sun and Moon
 
-	orbitPrimitive.push_back(new OrbitPrimitive({ 1.f, .6f, 0.f, 0.f }, MODEL_MANAGER.models[2], 0.f, 1.f, 20.f));
+	orbitPrimitive.push_back(new OrbitPrimitive({ 1.f, .6f, 0.f, 0.f }, MODEL_MANAGER.models[2], 0.f, 1.f, 20.f, true));
 
-	orbitPrimitive.push_back(new OrbitPrimitive({ 0.1f, 0.3f, 0.4f, 0.f }, MODEL_MANAGER.models[2], M_PI, 1.f, 20.f));
+	orbitPrimitive.push_back(new OrbitPrimitive({ 0.1f, 0.3f, 0.4f, 0.f }, MODEL_MANAGER.models[2], M_PI, 1.f, 20.f, false));
 }
 
 void ObjectManager::Update(float _dt)
