@@ -39,34 +39,34 @@ void Camera::Update(float _dt)
 
 void Camera::Inputs(GLFWwindow* _window, float _dt)
 {
-	if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS) 
+	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_W))
 	{
 		transform.position += transform.forward * cameraSpeed * _dt;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS) 
+	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_S))
 	{
 		transform.position -= transform.forward * cameraSpeed * _dt;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS) 
+	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_A))
 	{
 		transform.position -= glm::normalize(glm::cross(transform.forward, transform.up)) * cameraSpeed * _dt;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) 
+	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_D))
 	{
 		transform.position += glm::normalize(glm::cross(transform.forward, transform.up)) * cameraSpeed * _dt;
 	}
-	if (glfwGetKey(_window, GLFW_KEY_F) == GLFW_PRESS)
+	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_F))
 	{
 		if (isActive == 1)
 			isActive = 0;
 		else
 			isActive = 1;
 	}
-	glfwGetCursorPos(_window, &xpos, &ypos);
-	mouse_callback(_window, xpos, ypos);
+	INPUT_MANAGER.getMousePosition(xpos, ypos);
+	rotateCamera();
 }
 
-void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
+void Camera::rotateCamera()
 {
 	if (firstMouse) {
 		lastX = xpos;
@@ -75,7 +75,7 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	}
 
 	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; // Invertido porque los sistemas de coordenadas de Y van al revés
+	float yoffset = lastY - ypos;
 	lastX = xpos;
 	lastY = ypos;
 
@@ -86,7 +86,6 @@ void Camera::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	yaw += xoffset;
 	pitch += yoffset;
 
-	// Asegurarse de que pitch no pase de los límites
 	if (pitch > 89.0f)
 		pitch = 89.0f;
 	if (pitch < -89.0f)

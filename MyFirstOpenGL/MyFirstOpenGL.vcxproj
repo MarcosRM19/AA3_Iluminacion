@@ -22,6 +22,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GLManager.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="MatrixUtilities.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelManager.cpp" />
@@ -45,6 +46,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GLManager.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="MatrixUtilities.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelManager.h" />

@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "ProgramManager.h"
+#include "InputManager.h"
 
 class Camera : public Object
 {
@@ -31,5 +32,5 @@ public:
 
 	void Inputs(GLFWwindow* _window, float _dt);
 
-	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+	void rotateCamera();
 };

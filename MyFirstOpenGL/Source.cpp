@@ -2,6 +2,7 @@
 #include "GLManager.h"
 #include "ObjectManager.h"
 #include "TimeManager.h"
+#include "InputManager.h"
 
 void main()
 {
@@ -28,6 +29,8 @@ void main()
 		// Declarar instancia de GameObject	
 		OBJECT_MANAGER.CreateSpwanPoint();
 		OBJECT_MANAGER.CreateObjects();
+
+		INPUT_MANAGER.registerCallbacks(GL_MANAGER.window);
 
 		// Generamos el game loop
 		while (!glfwWindowShouldClose(GL_MANAGER.window))
