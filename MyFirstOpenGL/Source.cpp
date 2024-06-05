@@ -1,6 +1,8 @@
 #include "ProgramManager.h"
 #include "GLManager.h"
 #include "ObjectManager.h"
+#include "TimeManager.h"
+#include "InputManager.h"
 
 void main()
 {
@@ -28,6 +30,8 @@ void main()
 		OBJECT_MANAGER.CreateSpwanPoint();
 		OBJECT_MANAGER.CreateObjects();
 
+		INPUT_MANAGER.registerCallbacks(GL_MANAGER.window);
+
 		// Generamos el game loop
 		while (!glfwWindowShouldClose(GL_MANAGER.window))
 		{
@@ -36,7 +40,9 @@ void main()
 			// Limpiamos los buffers
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-			OBJECT_MANAGER.Update(0.0f);
+			TIME_MANAGER.Update();
+
+			OBJECT_MANAGER.Update(TIME_MANAGER.GetDeltaTime());
 
 			// Cambiamos buffers
 			glFlush();

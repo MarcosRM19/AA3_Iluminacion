@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Camera.h"
-#include "SpwanPoint.h"
+#include "OrbitPrimitive.h"
 
 #include "ModelManager.h"
 
@@ -26,12 +26,14 @@ public:
 	~ObjectManager();
 
 	Camera* camera;
-	std::vector<SpawnPoint*> spawnPoints;
+	std::vector<glm::vec3*> spawnPoints;
 	std::vector<GameObject*> gameObjects;
+	std::vector<OrbitPrimitive*> orbitPrimitive;
 
 	void CreateSpwanPoint();
 	void CreateObjects();
 
 	void Update(float _dt);
+	glm::vec3 GetRandomPosition();
 };
 

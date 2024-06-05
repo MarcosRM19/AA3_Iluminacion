@@ -27,8 +27,8 @@ public:
 
 	std::vector<Model> models;
 
-	Model LoadOBJModel(const std::string& _filePath);
-	Model LoadPrimitive(const std::vector<float>& _vertexs);
+	Model LoadOBJModel(const std::string& _filePath, GLuint _program, Texture* texture, GLuint renderMode);
+	Model LoadPrimitive(const std::vector<float>& _vertexs, GLuint _program, Texture* texture, GLuint renderMode);
 };
 
 

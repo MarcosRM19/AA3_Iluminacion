@@ -8,6 +8,9 @@
 #include <fstream>
 #include <iostream>
 
+#include "Texture.h"
+#include "ProgramManager.h"
+
 class Model
 {
 private:
@@ -16,19 +19,20 @@ private:
     GLuint colorVBO;
     unsigned int numVertexs;
 
+    GLuint program, renderMode;
+    Texture* texture;
+
 public:
 
     // Constructor for game objects with texture
-    Model(const std::vector<float>& _vertexs, const std::vector<float>& _uvs, const std::vector<float>& _normals);
+    Model(const std::vector<float>& _vertexs, const std::vector<float>& _uvs, const std::vector<float>& _normals, GLuint _program, Texture* texture, GLuint renderMode);
     // Constructor for primitives
-    Model(const std::vector<float>& _vertexs);
+    Model(const std::vector<float>& _vertexs, GLuint _program, Texture* texture, GLuint renderMode);
+
+    void Render();
 
     // GETTERS 
-    GLuint GetVAO();
-    GLuint GetVBO();
-    GLuint GetUvVBO();
-    unsigned int GetNumVertexs();
-
+    GLuint GetProgram();
 };
 
 #endif

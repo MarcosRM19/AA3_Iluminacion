@@ -1,6 +1,8 @@
 #include "Model.h"
 
-Model::Model(const std::vector<float>& _vertexs, const std::vector<float>& _uvs, const std::vector<float>& _normals) {
+Model::Model(const std::vector<float>& _vertexs, const std::vector<float>& _uvs, const std::vector<float>& _normals, GLuint _program, Texture* texture, GLuint renderMode)
+    :program(_program), texture(texture), renderMode(renderMode)
+{
 
     //Almaceno la cantidad de vertices que habra
     this->numVertexs = _vertexs.size() / 3;
@@ -40,7 +42,8 @@ Model::Model(const std::vector<float>& _vertexs, const std::vector<float>& _uvs,
 
 }
 
-Model::Model(const std::vector<float>& _vertexs)
+Model::Model(const std::vector<float>& _vertexs, GLuint _program, Texture* texture, GLuint renderMode)
+    :program(_program), texture(texture), renderMode(renderMode)
 {
     //Almaceno la cantidad de vertices que habra
     this->numVertexs = _vertexs.size() / 3;
@@ -65,22 +68,26 @@ Model::Model(const std::vector<float>& _vertexs)
     glBindVertexArray(0);
 }
 
-GLuint Model::GetVAO()
+void Model::Render()
 {
-    return VAO;
+    //Vinculo su VAO para ser usado
+    glBindVertexArray(VAO);
+
+    glUseProgram(program);
+
+    if (texture != nullptr)
+    {
+        glUniform1i(glGetUniformLocation(program, "textureSampler"), texture->textureIndex);
+    }
+
+    // Dibujamos
+    glDrawArrays(renderMode, 0, numVertexs);
+
+    //Desvinculamos VAO
+    glBindVertexArray(0);
 }
 
-GLuint Model::GetVBO()
+GLuint Model::GetProgram()
 {
-    return VBO;
-}
-
-GLuint Model::GetUvVBO()
-{
-    return uvVBO;
-}
-
-unsigned int Model::GetNumVertexs()
-{
-    return numVertexs; 
+    return program;
 }
