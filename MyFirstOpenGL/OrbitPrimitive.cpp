@@ -49,7 +49,6 @@ void OrbitPrimitive::ApplyLight()
 	{
 		CalculateInterpolation();
 		glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "t"), alphaValue);
-		std::cout << alphaValue << std::endl;
 	}
 }
 

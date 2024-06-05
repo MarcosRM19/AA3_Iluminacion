@@ -18,6 +18,11 @@ private:
 
 	float yaw, pitch;
 
+	int isActive; 
+	float innerConeAngle;
+	float outerConeAngle;
+	float maxDistance;
+
 public:
 
 	Camera();

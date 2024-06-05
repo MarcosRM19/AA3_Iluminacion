@@ -8,6 +8,11 @@ Camera::Camera()
 	yaw = -90.f;
 	pitch = 0.0f;
 	firstMouse = true;
+
+	isActive = 0;
+	innerConeAngle = glm::radians(25.0f);
+	outerConeAngle = glm::radians(35.0f);
+	maxDistance = 2.0f;
 };
 
 void Camera::Update(float _dt)
@@ -23,6 +28,13 @@ void Camera::Update(float _dt)
 		glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	}
+
+	glUseProgram(PROGRAM_MANAGER.compiledPrograms[0]);
+	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLight"), 1, glm::value_ptr(transform.position));
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "isActive"), isActive);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "maxDistance"), maxDistance);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "innerConeAngle"), innerConeAngle);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "outerConeAngle"), outerConeAngle);
 }
 
 void Camera::Inputs(GLFWwindow* _window, float _dt)
@@ -42,6 +54,13 @@ void Camera::Inputs(GLFWwindow* _window, float _dt)
 	if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS) 
 	{
 		transform.position += glm::normalize(glm::cross(transform.forward, transform.up)) * cameraSpeed * _dt;
+	}
+	if (glfwGetKey(_window, GLFW_KEY_F) == GLFW_PRESS)
+	{
+		if (isActive == 1)
+			isActive = 0;
+		else
+			isActive = 1;
 	}
 	glfwGetCursorPos(_window, &xpos, &ypos);
 	mouse_callback(_window, xpos, ypos);
