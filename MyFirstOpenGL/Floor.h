@@ -1,13 +1,13 @@
 #pragma once
 #include "Object.h"
 
-class GameObject : public Object
+class Floor : public Object
 {
 private:
 	Model model;
 
 public:
-	GameObject(glm::vec3 position, float maxScale, float minScale, Model model);
+	Floor(glm::vec3 position, Model model);
 
 	virtual void Update(float _dt) override;
 };

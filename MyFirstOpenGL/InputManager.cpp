@@ -26,12 +26,12 @@ void InputManager::registerCallbacks(GLFWwindow* window)
 	glfwSetCursorPosCallback(window, CheckMousePosition);
 }
 
-bool InputManager::isKeyPressed(int key)
+bool InputManager::IsKeyPressed(int key)
 {
 	return keyState[key];
 }
 
-glm::vec2 InputManager::getMousePosition()
+glm::vec2 InputManager::GetMousePosition()
 {
 	return mouseInput;
 }

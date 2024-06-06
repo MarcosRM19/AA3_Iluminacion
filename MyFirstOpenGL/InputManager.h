@@ -30,6 +30,6 @@ public:
 
 	void registerCallbacks(GLFWwindow* window);
 
-	bool isKeyPressed(int key);
-	glm::vec2 getMousePosition();
+	bool IsKeyPressed(int key);
+	glm::vec2 GetMousePosition();
 };

@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "OrbitPrimitive.h"
+#include "Floor.h"
 
 #include "ModelManager.h"
 
@@ -29,6 +30,8 @@ public:
 	std::vector<glm::vec3*> spawnPoints;
 	std::vector<GameObject*> gameObjects;
 	std::vector<OrbitPrimitive*> orbitPrimitive;
+
+	Floor* floor;
 
 	void CreateSpwanPoint();
 	void CreateObjects();

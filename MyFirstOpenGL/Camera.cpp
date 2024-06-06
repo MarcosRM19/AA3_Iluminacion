@@ -19,11 +19,6 @@ Camera::Camera()
 
 void Camera::Update(float _dt)
 {
-	ApplyMatrix();
-}
-
-void Camera::ApplyMatrix()
-{
 	// Matrix generation
 	glm::mat4 view = glm::lookAt(transform.position, transform.position + transform.forward, transform.up);
 	glm::mat4 projection = glm::perspective(glm::radians(fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, near, far);
@@ -48,23 +43,23 @@ void Camera::ApplyMatrix()
 void Camera::Inputs(GLFWwindow* _window, float _dt)
 {
 	//camera inputs
-	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_W))
+	if (INPUT_MANAGER.IsKeyPressed(GLFW_KEY_W))
 	{
 		transform.position += transform.forward * cameraSpeed * _dt;
 	}
-	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_S))
+	if (INPUT_MANAGER.IsKeyPressed(GLFW_KEY_S))
 	{
 		transform.position -= transform.forward * cameraSpeed * _dt;
 	}
-	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_A))
+	if (INPUT_MANAGER.IsKeyPressed(GLFW_KEY_A))
 	{
 		transform.position -= glm::normalize(glm::cross(transform.forward, transform.up)) * cameraSpeed * _dt;
 	}
-	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_D))
+	if (INPUT_MANAGER.IsKeyPressed(GLFW_KEY_D))
 	{
 		transform.position += glm::normalize(glm::cross(transform.forward, transform.up)) * cameraSpeed * _dt;
 	}
-	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_F))
+	if (INPUT_MANAGER.IsKeyPressed(GLFW_KEY_F))
 	{
 		if (isActive == 1)
 			isActive = 0;
@@ -79,8 +74,8 @@ void Camera::Inputs(GLFWwindow* _window, float _dt)
 void Camera::rotateCamera()
 {
 	//Set x and y position in the area of the windows
-	xpos = INPUT_MANAGER.getMousePosition().x;
-	ypos = INPUT_MANAGER.getMousePosition().y;
+	xpos = INPUT_MANAGER.GetMousePosition().x;
+	ypos = INPUT_MANAGER.GetMousePosition().y;
 
 	if (firstMouse) {
 		lastX = xpos;

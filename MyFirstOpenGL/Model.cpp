@@ -68,7 +68,7 @@ Model::Model(const std::vector<float>& _vertexs, GLuint _program, Texture* textu
     glBindVertexArray(0);
 }
 
-void Model::Render()
+void Model::Render(Transform transform)
 {
     //Link your VAO to be used
     glBindVertexArray(VAO);
@@ -80,11 +80,31 @@ void Model::Render()
         glUniform1i(glGetUniformLocation(program, "textureSampler"), texture->textureIndex);
     }
 
+    ApplyMatrix(transform);
+
     //Draw
     glDrawArrays(renderMode, 0, numVertexs);
 
     //Unlink Vao
     glBindVertexArray(0);
+}
+
+void Model::ApplyMatrix(Transform transform)
+{
+    //Define the translation, rotation and scaling matrix
+    glm::mat4 translationMatrix = MatrixUtilities::GenerateTranslationMatrix(transform.position);
+    glm::mat4 rotationMatrix = MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.x);
+    rotationMatrix *= MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.y);
+    rotationMatrix *= MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.z);
+    glm::mat4 scaleMatrix = MatrixUtilities::GenerateScaleMatrix(transform.scale);
+
+    //Assign initial values to the program
+    glUniform2f(glGetUniformLocation(GetProgram(), "windowSize"), WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    //Pass the matrixs
+    glUniformMatrix4fv(glGetUniformLocation(GetProgram(), "translationMatrix"), 1, GL_FALSE, glm::value_ptr(translationMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(GetProgram(), "rotationMatrix"), 1, GL_FALSE, glm::value_ptr(rotationMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(GetProgram(), "scaleMatrix"), 1, GL_FALSE, glm::value_ptr(scaleMatrix));
 }
 
 GLuint Model::GetProgram()

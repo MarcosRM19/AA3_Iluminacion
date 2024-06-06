@@ -2,14 +2,22 @@
 
 ModelManager::ModelManager()
 {
-	//Create the textures
-	Texture* textureTroll = new Texture("Assets/Textures/Troll.png", GL_TEXTURE0, 0);
-	Texture* textureRock = new Texture("Assets/Textures/Rock.png", GL_TEXTURE1, 1);
-	Texture* textureBarrier = new Texture("Assets/Textures/barrier.png", GL_TEXTURE2, 2);
-	Texture* textureSemaphore = new Texture("Assets/Textures/semaphore.png", GL_TEXTURE3, 3);
-	Texture* textureBigSigne = new Texture("Assets/Textures/bigsigne.png", GL_TEXTURE4, 4);
-
 	//Create and push the models in the models vector
+	Texture* textureCube = new Texture("Assets/Textures/cube.png", GL_TEXTURE0, 0);
+	models.push_back(LoadOBJModel("Assets/Models/cube.obj", PROGRAM_MANAGER.compiledPrograms[0], textureCube, GL_TRIANGLES));
+
+	Texture* textureTroll = new Texture("Assets/Textures/Troll.png", GL_TEXTURE1, 1);
+	models.push_back(LoadOBJModel("Assets/Models/troll.obj", PROGRAM_MANAGER.compiledPrograms[0], textureTroll, GL_TRIANGLES));
+
+	Texture* textureRock = new Texture("Assets/Textures/Rock.png", GL_TEXTURE2, 2);
+	models.push_back(LoadOBJModel("Assets/Models/rock.obj", PROGRAM_MANAGER.compiledPrograms[0], textureRock, GL_TRIANGLES));
+
+	Texture* textureBarrier = new Texture("Assets/Textures/barrier.png", GL_TEXTURE3, 3);
+	models.push_back(LoadOBJModel("Assets/Models/Barrier.obj", PROGRAM_MANAGER.compiledPrograms[0], textureBarrier, GL_TRIANGLES));
+
+	Texture* textureBigSigne = new Texture("Assets/Textures/bigsigne.png", GL_TEXTURE4, 4);
+	models.push_back(LoadOBJModel("Assets/Models/BigSigne.obj", PROGRAM_MANAGER.compiledPrograms[0], textureBigSigne, GL_TRIANGLES));
+
 	models.push_back(LoadPrimitive(
 		{
 		-0.2f, +0.2f, -0.2f, // 3
@@ -28,12 +36,6 @@ ModelManager::ModelManager()
 		+0.2f, +0.2f, +0.2f  // 0
 		}, PROGRAM_MANAGER.compiledPrograms[1], nullptr, GL_TRIANGLE_STRIP)
 	);
-
-	models.push_back(LoadOBJModel("Assets/Models/Barrier.obj", PROGRAM_MANAGER.compiledPrograms[0], textureBarrier, GL_TRIANGLES));
-	models.push_back(LoadOBJModel("Assets/Models/BigSigne.obj", PROGRAM_MANAGER.compiledPrograms[0], textureBigSigne, GL_TRIANGLES));
-	models.push_back(LoadOBJModel("Assets/Models/troll.obj", PROGRAM_MANAGER.compiledPrograms[0], textureTroll, GL_TRIANGLES));
-	models.push_back(LoadOBJModel("Assets/Models/rock.obj", PROGRAM_MANAGER.compiledPrograms[0], textureRock, GL_TRIANGLES));
-
 }
 
 Model ModelManager::LoadOBJModel(const std::string& _filePath, GLuint _program, Texture* texture, GLuint renderMode)

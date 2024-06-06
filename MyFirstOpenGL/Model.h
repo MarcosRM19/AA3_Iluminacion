@@ -7,9 +7,14 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <gtc/type_ptr.hpp>>
 
 #include "Texture.h"
 #include "ProgramManager.h"
+#include "Transform.h"
+#include "GLManager.h"
+#include "MatrixUtilities.h"
+
 
 class Model
 {
@@ -29,7 +34,8 @@ public:
     // Constructor for primitives
     Model(const std::vector<float>& _vertexs, GLuint _program, Texture* texture, GLuint renderMode);
 
-    void Render();
+    void Render(Transform transform);
+    void ApplyMatrix(Transform transform);
 
     // GETTERS 
     GLuint GetProgram();
