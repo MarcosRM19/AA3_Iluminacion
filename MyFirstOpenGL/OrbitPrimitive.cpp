@@ -1,8 +1,8 @@
 #include "OrbitPrimitive.h"
 
-OrbitPrimitive::OrbitPrimitive(glm::vec4 _color, Model model, float initAngle, float radius, float orbitTime, bool interpolateColor)
-    : Object(Transform(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec3(0.3))), color(_color), model(model), initAngle(initAngle), radius(radius), orbitTime(orbitTime), 
-	interpolateColor(interpolateColor)
+OrbitPrimitive::OrbitPrimitive(glm::vec4 _color, Model model, float initAngle, float radius, float orbitTime, float coeficientValue, bool interpolateColor)
+	: Object(Transform(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec3(0.3))), color(_color), model(model), initAngle(initAngle), radius(radius), orbitTime(orbitTime),
+	interpolateColor(interpolateColor), coeficientValue(coeficientValue)
 {
 	elapsedTime = 0.0f;
 	angle = initAngle;
@@ -25,6 +25,7 @@ void OrbitPrimitive::ApplyLight()
 	if (transform.position.y > 0)
 	{
 		glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "sourceLight"), 1, glm::value_ptr(transform.position));
+		glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "coeficientValue"), coeficientValue);
 	}
 
 	//Only 1 of the orbit objects going to calculate the interpolation to try to simplify the method

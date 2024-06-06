@@ -41,9 +41,9 @@ void ObjectManager::CreateObjects()
 	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.3f, 0.4f, MODEL_MANAGER.models[4]));
 
 	//Set orbit objects 
-	orbitPrimitive.push_back(new OrbitPrimitive({ 1.f, .6f, 0.f, 0.f }, MODEL_MANAGER.models[5], 0.f, 1.f, 20.f, true));
+	orbitPrimitive.push_back(new OrbitPrimitive({ 1.f, .6f, 0.f, 0.f }, MODEL_MANAGER.models[5], 0.f, 1.f, 20.f, 1, true));
 
-	orbitPrimitive.push_back(new OrbitPrimitive({ 0.1f, 0.3f, 0.4f, 0.f }, MODEL_MANAGER.models[5], M_PI, 1.f, 20.f, false));
+	orbitPrimitive.push_back(new OrbitPrimitive({ 0.1f, 0.3f, 0.4f, 0.f }, MODEL_MANAGER.models[5], M_PI, 1.f, 20.f, 0.5, false));
 }
 
 void ObjectManager::Update(float _dt)

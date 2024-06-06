@@ -4,15 +4,17 @@ uniform vec2 windowSize;
 uniform sampler2D textureSampler;
 uniform vec3 sourceLight;
 uniform vec3 spotLight;
+uniform vec3 spotLightDirection;
 uniform float t;
 
 uniform vec3 colorA;
 uniform vec3 colorB;
 
 uniform bool isActive;
-uniform float innerConeAngle;  
+uniform float coeficientValue;
+
+uniform float innerConeAngle;            
 uniform float outerConeAngle; 
-uniform float maxDistance;  
 
 in vec2 uvsFragmentShader;
 in vec3 normalsFragmentShader;
@@ -31,6 +33,7 @@ void main() {
 
             vec3 lineToLight = normalize(sourceLight - primitivePosition.xyz); 
             float sourceLightAngle = dot(normalsFragmentShader, lineToLight); 
+
             if(sourceLightAngle < 0.15)
             {
                 sourceLightAngle = 0.15;
@@ -38,27 +41,33 @@ void main() {
 
             vec3 ambientColor = mix(colorA, colorB, t);
 
-            orbitColor =  baseColor.rgb * sourceLightAngle * ambientColor; 
+            orbitColor =  baseColor.rgb * sourceLightAngle * ambientColor * coeficientValue; 
 
             color = orbitColor;
 
             if(isActive)
             {
                 vec3 spotlightLight = normalize(spotLight - primitivePosition.xyz);
-
-                float distanceToWhiteLight = length(spotLight - primitivePosition.xyz);
-
-                float attenuation = max(0.0, 1.0 -(distanceToWhiteLight / maxDistance));
-
                 float sourceSpotLightAngle = dot(normalsFragmentShader, spotlightLight);
 
-                float coneIntensity = smoothstep(cos(outerConeAngle), cos(innerConeAngle), sourceSpotLightAngle);
+                float distance = length(primitivePosition.xyz - spotLight);
+                float intensity = 1 / (distance * distance);
 
-                vec3 flashlightContribution = vec3(1.0, 1.0, 1.0) * coneIntensity * attenuation;
+                float distance2D = length(primitivePosition.xy - spotLight.xy);
 
-                color += flashlightContribution * baseColor.rgb;
+                float multy = 1; 
+   
+                if(distance2D < 0.2)
+                {
+                     multy *= 6; 
+                }
+                else if(distance2D < 0.3)
+                {
+                    multy *= 5;
+                }
+
+                 color += sourceSpotLightAngle * multy * intensity * baseColor.rgb;
             }
 
         fragColor = vec4(color,1.0);
-
 }

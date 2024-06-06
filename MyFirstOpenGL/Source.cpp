@@ -19,7 +19,7 @@ void main()
 	if (glewInit() == GLEW_OK)
 	{
 		//We define color to clear the color buffer
-		glClearColor(0.f, 0.6f, 1.f, 1.f);
+		glClearColor(0.f, 0.f, 0.f, 1.f);
 
 		//We define drawing mode for each face
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

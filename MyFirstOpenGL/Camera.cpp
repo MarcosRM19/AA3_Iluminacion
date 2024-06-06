@@ -12,9 +12,6 @@ Camera::Camera()
 
 	//SpotLight variables
 	isActive = 0;
-	innerConeAngle = glm::radians(25.0f);
-	outerConeAngle = glm::radians(35.0f);
-	maxDistance = 2.0f;
 };
 
 void Camera::Update(float _dt)
@@ -34,10 +31,10 @@ void Camera::Update(float _dt)
 	//Pass SpotLigh variables to the program that used by the models
 	glUseProgram(PROGRAM_MANAGER.compiledPrograms[0]);
 	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLight"), 1, glm::value_ptr(transform.position));
+	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLightDirection"), 1, glm::value_ptr(transform.forward));
 	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "isActive"), isActive);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "maxDistance"), maxDistance);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "innerConeAngle"), innerConeAngle);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "outerConeAngle"), outerConeAngle);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "innerConeAngle"), glm::radians(12.5f));
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "outerConeAngle"), glm::radians(17.5f));
 }
 
 void Camera::Inputs(GLFWwindow* _window, float _dt)
