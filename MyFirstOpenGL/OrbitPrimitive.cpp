@@ -10,31 +10,10 @@ OrbitPrimitive::OrbitPrimitive(glm::vec4 _color, Model model, float initAngle, f
 
 void OrbitPrimitive::Update(float _dt)
 {
-	model.Render();
+	model.Render(transform, color);
+
 	CalculateOrbit(_dt);
-	ApplyMatrix();
 	ApplyLight();
-}
-
-void OrbitPrimitive::ApplyMatrix()
-{
-	//Define the translation, rotation and scaling matrix
-	glm::mat4 translationMatrix = MatrixUtilities::GenerateTranslationMatrix(transform.position);
-	glm::mat4 rotationMatrix = MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.x);
-	rotationMatrix *= MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.y);
-	rotationMatrix *= MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.z);
-	glm::mat4 scaleMatrix = MatrixUtilities::GenerateScaleMatrix(transform.scale);
-
-	//Assign initial values to the program
-	glUniform2f(glGetUniformLocation(model.GetProgram(), "windowSize"), WINDOW_WIDTH, WINDOW_HEIGHT);
-
-	//Pass the matrixs
-	glUniformMatrix4fv(glGetUniformLocation(model.GetProgram(), "translationMatrix"), 1, GL_FALSE, glm::value_ptr(translationMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(model.GetProgram(), "rotationMatrix"), 1, GL_FALSE, glm::value_ptr(rotationMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(model.GetProgram(), "scaleMatrix"), 1, GL_FALSE, glm::value_ptr(scaleMatrix));
-
-	//Pass the color in which we want to paint the game object
-	glUniform4fv(glGetUniformLocation(model.GetProgram(), "ambientColor"), 1, glm::value_ptr(color));
 }
 
 void OrbitPrimitive::ApplyLight()

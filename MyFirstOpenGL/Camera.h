@@ -31,8 +31,6 @@ public:
 
 	virtual void Update(float _dt) override;
 
-	virtual void ApplyMatrix() override;
-
 	void Inputs(GLFWwindow* _window, float _dt);
 
 	void rotateCamera();

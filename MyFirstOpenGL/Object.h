@@ -21,8 +21,6 @@ public:
 	Object(Transform _transform);
 
 	virtual void Update(float _dt) = 0;
-
-	virtual void ApplyMatrix() = 0;
 };
 
 
