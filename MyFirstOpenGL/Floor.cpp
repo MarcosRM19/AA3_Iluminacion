@@ -6,6 +6,6 @@ Floor::Floor(glm::vec3 position, Model model)
 
 void Floor::Update(float _dt)
 {
-	model.Render(transform);
+	model.Render(transform, glm::vec4(1.0,1.0,1.0,1.0));
 }
 

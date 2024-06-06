@@ -68,7 +68,7 @@ Model::Model(const std::vector<float>& _vertexs, GLuint _program, Texture* textu
     glBindVertexArray(0);
 }
 
-void Model::Render(Transform transform)
+void Model::Render(Transform transform, glm::vec4 color)
 {
     //Link your VAO to be used
     glBindVertexArray(VAO);
@@ -78,6 +78,10 @@ void Model::Render(Transform transform)
     if (texture != nullptr)
     {
         glUniform1i(glGetUniformLocation(program, "textureSampler"), texture->textureIndex);
+    }
+    else
+    {
+        glUniform4fv(glGetUniformLocation(GetProgram(), "ambientColor"), 1, glm::value_ptr(color));
     }
 
     ApplyMatrix(transform);

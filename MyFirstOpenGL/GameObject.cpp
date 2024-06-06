@@ -8,6 +8,6 @@ GameObject::GameObject(glm::vec3 position, float maxScale, float minScale, Model
 
 void GameObject::Update(float _dt)
 {
-	model.Render(transform);
+	model.Render(transform, glm::vec4(1.0, 1.0, 1.0, 1.0));
 }
 

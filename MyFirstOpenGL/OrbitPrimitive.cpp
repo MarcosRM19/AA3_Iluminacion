@@ -10,12 +10,7 @@ OrbitPrimitive::OrbitPrimitive(glm::vec4 _color, Model model, float initAngle, f
 
 void OrbitPrimitive::Update(float _dt)
 {
-	model.Render(transform);
-
-	glUseProgram(model.GetProgram());
-
-	//Pass the color in which we want to paint the game object
-	glUniform4fv(glGetUniformLocation(model.GetProgram(), "ambientColor"), 1, glm::value_ptr(color));
+	model.Render(transform, color);
 
 	CalculateOrbit(_dt);
 	ApplyLight();

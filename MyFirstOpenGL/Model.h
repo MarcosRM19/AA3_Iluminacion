@@ -34,7 +34,7 @@ public:
     // Constructor for primitives
     Model(const std::vector<float>& _vertexs, GLuint _program, Texture* texture, GLuint renderMode);
 
-    void Render(Transform transform);
+    void Render(Transform transform, glm::vec4 color);
     void ApplyMatrix(Transform transform);
 
     // GETTERS 
