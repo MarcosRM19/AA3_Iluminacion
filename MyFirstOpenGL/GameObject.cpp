@@ -1,8 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject(glm::vec3 position, glm::vec4 _color, float maxScale, float minScale, Model model)
-	: Object(Transform(position, glm::vec3(0.f, 1.f, 0.f), glm::vec3(0.2))),
-		color(_color), model(model)
+GameObject::GameObject(glm::vec3 position, float maxScale, float minScale, Model model)
+	: Object(Transform(position, glm::vec3(0.f, rand() % 360, 0.f), glm::vec3(minScale + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxScale - minScale)))))),
+		 model(model)
 {}
 
 
