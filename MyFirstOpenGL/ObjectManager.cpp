@@ -17,8 +17,9 @@ ObjectManager::~ObjectManager()
 void ObjectManager::CreateSpwanPoint()
 {
 	spawnPoints.push_back(new glm::vec3(0.f, 0.f, 0.f));
+	spawnPoints.push_back(new glm::vec3(0.5f, 0.f, 0.5f));
 	spawnPoints.push_back(new glm::vec3(0.5f, 0.f, 0.f));
-	//spawnPoints.push_back(new glm::vec3(-0.5f, 0.f, 0.f));
+	spawnPoints.push_back(new glm::vec3(-0.5f, 0.f, 0.5f));
 }
 
 void ObjectManager::CreateObjects()
@@ -26,17 +27,20 @@ void ObjectManager::CreateObjects()
 	// 1. Set Camera
 	camera = new Camera();
 
-	gameObjects.push_back(new GameObject(GetRandomPosition(), {1.f, 1.f, 1.f, 1.f}, 0.1f, 0.3f, MODEL_MANAGER.models[0]));
+	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.1f, 0.3f, MODEL_MANAGER.models[1]));
 
-	gameObjects.push_back(new GameObject(GetRandomPosition(), {1.f, 0.5f, 0.5f, 1.f}, 0.1f, 0.3f, MODEL_MANAGER.models[1]));
+	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.3f, 0.4f, MODEL_MANAGER.models[2]));
 
-	//gameObjects.push_back(new GameObject(GetRandomPosition(), {0.5f, 0.5f, 1.f, 1.f}, 0.1f, 0.3f, MODEL_MANAGER.models[0]));
+	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.1f, 0.3f, MODEL_MANAGER.models[3]));
+
+	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.3f, 0.4f, MODEL_MANAGER.models[4]));
+
 
 	//Sun and Moon
 
-	orbitPrimitive.push_back(new OrbitPrimitive({ 1.f, .6f, 0.f, 0.f }, MODEL_MANAGER.models[2], 0.f, 1.f, 20.f, true));
+	orbitPrimitive.push_back(new OrbitPrimitive({ 1.f, .6f, 0.f, 0.f }, MODEL_MANAGER.models[0], 0.f, 1.f, 20.f, true));
 
-	orbitPrimitive.push_back(new OrbitPrimitive({ 0.1f, 0.3f, 0.4f, 0.f }, MODEL_MANAGER.models[2], M_PI, 1.f, 20.f, false));
+	orbitPrimitive.push_back(new OrbitPrimitive({ 0.1f, 0.3f, 0.4f, 0.f }, MODEL_MANAGER.models[0], M_PI, 1.f, 20.f, false));
 }
 
 void ObjectManager::Update(float _dt)
