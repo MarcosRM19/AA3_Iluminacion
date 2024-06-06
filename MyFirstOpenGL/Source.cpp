@@ -6,49 +6,52 @@
 
 void main()
 {
-	// Definir semillas del rand según el tiempo
+	//Define rand seeds according to time
 	srand(static_cast<unsigned int>(time(NULL)));
 
 	GL_MANAGER.WindowsConfiguration();
-	// Permitimos a GLEW usar funcionalidades experimentales
+
+	//We allow GLEW to use experimental features
 	glewExperimental = GL_TRUE;
 	GL_MANAGER.ActivateBackCulling();
 
 	// Inicializamos GLEW y controlamos errores
 	if (glewInit() == GLEW_OK)
 	{
-		// Definimos color para limpiar el buffer de color
+		//We define color to clear the color buffer
 		glClearColor(0.f, 0.6f, 1.f, 1.f);
-		// Definimos modo de dibujo para cada cara
+
+		//We define drawing mode for each face
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		// Compilar shaders
+		//Compile shaders
 		PROGRAM_MANAGER.PushProgram("MyFirstVertexShader.glsl", "MyFirstGeometryShader.glsl", "MyFirstFragmentShader.glsl");
 		PROGRAM_MANAGER.PushProgram("MyFirstVertexShader.glsl", "MyFirstGeometryShader.glsl", "PrimitiveFragmentShader.glsl");
 
-		// Declarar instancia de GameObject	
+		//Declare GameObject instance
 		OBJECT_MANAGER.CreateSpwanPoint();
 		OBJECT_MANAGER.CreateObjects();
 
 		INPUT_MANAGER.registerCallbacks(GL_MANAGER.window);
 
-		// Generamos el game loop
+		//Generate gameloop
 		while (!glfwWindowShouldClose(GL_MANAGER.window))
 		{
-			// Pulleamos los eventos (botones, teclas, mouse...)
+			//We pull the events(buttons, keys, mouse...)
 			glfwPollEvents();
-			// Limpiamos los buffers
+
+			//We clean the buffers
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+			//Call Updates
 			TIME_MANAGER.Update();
-
 			OBJECT_MANAGER.Update(TIME_MANAGER.GetDeltaTime());
 
-			// Cambiamos buffers
+			//We change buffers
 			glFlush();
 			glfwSwapBuffers(GL_MANAGER.window);
 		}
-		// Desactivar y eliminar programa
+		//Deactivate and delete program
 		glUseProgram(0);
 		PROGRAM_MANAGER.DeleteAllPrograms();
 	}

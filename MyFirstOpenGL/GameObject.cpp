@@ -9,18 +9,22 @@ GameObject::GameObject(glm::vec3 position, float maxScale, float minScale, Model
 void GameObject::Update(float _dt)
 {
 	model.Render();
+	ApplyMatrix();
+}
 
-	//Definir la matriz de traslacion, rotacion y escalado
+void GameObject::ApplyMatrix()
+{
+	//Define the translation, rotation and scaling matrix
 	glm::mat4 translationMatrix = MatrixUtilities::GenerateTranslationMatrix(transform.position);
 	glm::mat4 rotationMatrix = MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.x);
 	rotationMatrix *= MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.y);
 	rotationMatrix *= MatrixUtilities::GenerateRotationMatrix(transform.rotation, transform.rotation.z);
 	glm::mat4 scaleMatrix = MatrixUtilities::GenerateScaleMatrix(transform.scale);
 
-	//Asignar valores iniciales al programa
+	//Assign initial values to the program
 	glUniform2f(glGetUniformLocation(model.GetProgram(), "windowSize"), WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	// Pasar las matrices
+	//Pass the matrixs
 	glUniformMatrix4fv(glGetUniformLocation(model.GetProgram(), "translationMatrix"), 1, GL_FALSE, glm::value_ptr(translationMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(model.GetProgram(), "rotationMatrix"), 1, GL_FALSE, glm::value_ptr(rotationMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(model.GetProgram(), "scaleMatrix"), 1, GL_FALSE, glm::value_ptr(scaleMatrix));

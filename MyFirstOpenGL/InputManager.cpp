@@ -17,8 +17,7 @@ void InputManager::CheckKey(GLFWwindow* window, int key, int scancode, int actio
 void InputManager::CheckMousePosition(GLFWwindow* window, double xpos, double ypos)
 {
 	InputManager& manager = InputManager::Instance();
-	manager.mouseX = xpos;
-	manager.mouseY = ypos;
+	manager.mouseInput = glm::vec2(xpos, ypos);
 }
 
 void InputManager::registerCallbacks(GLFWwindow* window)
@@ -32,8 +31,7 @@ bool InputManager::isKeyPressed(int key)
 	return keyState[key];
 }
 
-void InputManager::getMousePosition(double& x, double& y)
+glm::vec2 InputManager::getMousePosition()
 {
-	x = mouseX;
-	y = mouseY;
+	return mouseInput;
 }

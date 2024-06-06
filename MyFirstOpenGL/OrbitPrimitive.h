@@ -17,6 +17,8 @@ public:
     
     virtual void Update(float _dt) override;
 
+    virtual void ApplyMatrix() override;
+
     void ApplyLight();
 
     void CalculateOrbit(float _dt);

@@ -10,5 +10,7 @@ public:
 	GameObject(glm::vec3 position, float maxScale, float minScale, Model model);
 
 	virtual void Update(float _dt) override;
+
+	virtual void ApplyMatrix() override;
 };
 

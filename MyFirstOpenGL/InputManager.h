@@ -1,6 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include <unordered_map>
+#include <glm.hpp>
 
 #define INPUT_MANAGER InputManager::Instance()
 
@@ -14,8 +15,7 @@ private:
 	InputManager& operator =(const InputManager&) = delete;
 
 	std::unordered_map<int, bool> keyState;
-	double mouseX;
-	double mouseY;
+	glm::vec2 mouseInput;
 
 	static void CheckKey(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void CheckMousePosition(GLFWwindow* window, double xpos, double ypos);
@@ -31,5 +31,5 @@ public:
 	void registerCallbacks(GLFWwindow* window);
 
 	bool isKeyPressed(int key);
-	void getMousePosition(double& x, double& y);
+	glm::vec2 getMousePosition();
 };

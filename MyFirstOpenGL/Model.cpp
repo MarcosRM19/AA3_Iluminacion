@@ -70,7 +70,7 @@ Model::Model(const std::vector<float>& _vertexs, GLuint _program, Texture* textu
 
 void Model::Render()
 {
-    //Vinculo su VAO para ser usado
+    //Link your VAO to be used
     glBindVertexArray(VAO);
 
     glUseProgram(program);
@@ -80,10 +80,10 @@ void Model::Render()
         glUniform1i(glGetUniformLocation(program, "textureSampler"), texture->textureIndex);
     }
 
-    // Dibujamos
+    //Draw
     glDrawArrays(renderMode, 0, numVertexs);
 
-    //Desvinculamos VAO
+    //Unlink Vao
     glBindVertexArray(0);
 }
 

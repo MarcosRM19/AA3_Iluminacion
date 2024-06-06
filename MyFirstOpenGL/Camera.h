@@ -16,6 +16,7 @@ private:
 	bool firstMouse;
 
 	float cameraSpeed;
+	float sensitivity;
 
 	float yaw, pitch;
 
@@ -29,6 +30,8 @@ public:
 	Camera();
 
 	virtual void Update(float _dt) override;
+
+	virtual void ApplyMatrix() override;
 
 	void Inputs(GLFWwindow* _window, float _dt);
 

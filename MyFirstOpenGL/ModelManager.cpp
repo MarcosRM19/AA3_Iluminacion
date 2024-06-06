@@ -2,12 +2,14 @@
 
 ModelManager::ModelManager()
 {
+	//Create the textures
 	Texture* textureTroll = new Texture("Assets/Textures/Troll.png", GL_TEXTURE0, 0);
 	Texture* textureRock = new Texture("Assets/Textures/Rock.png", GL_TEXTURE1, 1);
 	Texture* textureBarrier = new Texture("Assets/Textures/barrier.png", GL_TEXTURE2, 2);
 	Texture* textureSemaphore = new Texture("Assets/Textures/semaphore.png", GL_TEXTURE3, 3);
 	Texture* textureBigSigne = new Texture("Assets/Textures/bigsigne.png", GL_TEXTURE4, 4);
 
+	//Create and push the models in the models vector
 	models.push_back(LoadPrimitive(
 		{
 		-0.2f, +0.2f, -0.2f, // 3

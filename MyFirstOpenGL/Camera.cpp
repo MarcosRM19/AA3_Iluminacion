@@ -5,10 +5,12 @@ Camera::Camera()
 	fov(45.f), near(0.1f), far(10.f)
 {
 	cameraSpeed = 1;
+	sensitivity = 0.1f;
 	yaw = -90.f;
 	pitch = 0.0f;
 	firstMouse = true;
 
+	//SpotLight variables
 	isActive = 0;
 	innerConeAngle = glm::radians(25.0f);
 	outerConeAngle = glm::radians(35.0f);
@@ -17,11 +19,16 @@ Camera::Camera()
 
 void Camera::Update(float _dt)
 {
+	ApplyMatrix();
+}
+
+void Camera::ApplyMatrix()
+{
 	// Matrix generation
 	glm::mat4 view = glm::lookAt(transform.position, transform.position + transform.forward, transform.up);
 	glm::mat4 projection = glm::perspective(glm::radians(fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, near, far);
 
-	//Indicar a la tarjeta GPU que programa debe usar
+	//Pass view and projection information to all programs
 	for (GLuint program : PROGRAM_MANAGER.compiledPrograms)
 	{
 		glUseProgram(program);
@@ -29,6 +36,7 @@ void Camera::Update(float _dt)
 		glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	}
 
+	//Pass SpotLigh variables to the program that used by the models
 	glUseProgram(PROGRAM_MANAGER.compiledPrograms[0]);
 	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLight"), 1, glm::value_ptr(transform.position));
 	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "isActive"), isActive);
@@ -39,6 +47,7 @@ void Camera::Update(float _dt)
 
 void Camera::Inputs(GLFWwindow* _window, float _dt)
 {
+	//camera inputs
 	if (INPUT_MANAGER.isKeyPressed(GLFW_KEY_W))
 	{
 		transform.position += transform.forward * cameraSpeed * _dt;
@@ -62,12 +71,17 @@ void Camera::Inputs(GLFWwindow* _window, float _dt)
 		else
 			isActive = 1;
 	}
-	INPUT_MANAGER.getMousePosition(xpos, ypos);
+
+	//Function that rotate de camera with the information of xPos and yPos
 	rotateCamera();
 }
 
 void Camera::rotateCamera()
 {
+	//Set x and y position in the area of the windows
+	xpos = INPUT_MANAGER.getMousePosition().x;
+	ypos = INPUT_MANAGER.getMousePosition().y;
+
 	if (firstMouse) {
 		lastX = xpos;
 		lastY = ypos;
@@ -79,18 +93,19 @@ void Camera::rotateCamera()
 	lastX = xpos;
 	lastY = ypos;
 
-	float sensitivity = 0.1f;
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
 
 	yaw += xoffset;
 	pitch += yoffset;
 
+	//layer movement on the Y axis
 	if (pitch > 89.0f)
 		pitch = 89.0f;
 	if (pitch < -89.0f)
 		pitch = -89.0f;
 
+	//Set new forward values
 	glm::vec3 front;
 	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 	front.y = sin(glm::radians(pitch));
