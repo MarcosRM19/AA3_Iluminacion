@@ -20,7 +20,6 @@ void ObjectManager::CreateSpwanPoint()
 	spawnPoints.push_back(new glm::vec3(0.5f, 0.f, 0.5f));
 	spawnPoints.push_back(new glm::vec3(0.5f, 0.f, 0.f));
 	spawnPoints.push_back(new glm::vec3(-0.5f, 0.f, 0.5f));
-	spawnPoints.push_back(new glm::vec3(-0.5f, 0.f, 0.f));
 }
 
 void ObjectManager::CreateObjects()
