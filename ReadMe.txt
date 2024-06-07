@@ -1,6 +1,6 @@
 1.
 Tener en cuenta que he decidio incorporar un suelo la cual tiene ciertas diferencias a los modelos normales, la más importante es que este tiene su propio Fragment Shader ya
-quiero que el suelo sea tintado por el ambient color de las orbitas para mostrar que la interpolacion se esta ejecutando bien a la vez que es afectado por la luz de estas,
+que quiero  que el suelo sea tintado por el ambient color de las orbitas para mostrar que la interpolacion se esta ejecutando bien a la vez que es afectado por la luz de estas,
 pero no quiero que la linterna afecte a este ya que al ser un modelo tan simple genera pequeños problemas al iluminarla con la linterna, dejando eso exclusivo de los modelos
 
 El suelo a la vez tapa la orbita inferior de el sol y la luna pero realmente si esta realizando la orbita, si se quiere comprobra que se esta efectuando se puede comentar la 
