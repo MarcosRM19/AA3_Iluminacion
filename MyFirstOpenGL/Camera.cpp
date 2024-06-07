@@ -12,9 +12,7 @@ Camera::Camera()
 
 	//SpotLight variables
 	isActive = 0;
-	outerConeAngle = 20.0f;
-	innerConeAngle = 10.0f;
-	intensity = 0.7;
+	flashLight = new FlashLight();
 };
 
 void Camera::Update(float _dt)
@@ -31,14 +29,12 @@ void Camera::Update(float _dt)
 		glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	}
 
-	//Pass SpotLigh variables to the program that used by the models
-	glUseProgram(PROGRAM_MANAGER.compiledPrograms[0]);
-	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLight"), 1, glm::value_ptr(transform.position));
-	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLightDirection"), 1, glm::value_ptr(transform.forward));
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "isActive"), (int)isActive);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "outerConeAngle"), outerConeAngle);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "innerConeAngle"), innerConeAngle);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "intensity"), intensity);
+	flashLight->Update(transform, isActive);
+}
+
+Camera::~Camera()
+{
+	delete flashLight;
 }
 
 void Camera::Inputs(GLFWwindow* _window, float _dt)
