@@ -12,6 +12,9 @@ Camera::Camera()
 
 	//SpotLight variables
 	isActive = 0;
+	outerConeAngle = 20.0f;
+	innerConeAngle = 10.0f;
+	intensity = 0.7;
 };
 
 void Camera::Update(float _dt)
@@ -33,9 +36,9 @@ void Camera::Update(float _dt)
 	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLight"), 1, glm::value_ptr(transform.position));
 	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLightDirection"), 1, glm::value_ptr(transform.forward));
 	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "isActive"), (int)isActive);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "outerConeAngle"), 20.f);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "innerConeAngle"), 10.f);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "intensity"), 0.7);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "outerConeAngle"), outerConeAngle);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "innerConeAngle"), innerConeAngle);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "intensity"), intensity);
 }
 
 void Camera::Inputs(GLFWwindow* _window, float _dt)

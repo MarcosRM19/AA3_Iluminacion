@@ -32,13 +32,13 @@ void ObjectManager::CreateObjects()
 	floor = new Floor(glm::vec3(0.f, -1.9f, 0.f), MODEL_MANAGER.models[0]);
 
 	//Set GameObjects with models
-	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.1f, 0.3f, MODEL_MANAGER.models[1]));
+	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.2f, 0.4f, MODEL_MANAGER.models[1]));
 
-	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.3f, 0.4f, MODEL_MANAGER.models[2]));
+	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.1f, 0.3f, MODEL_MANAGER.models[2]));
 
 	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.1f, 0.3f, MODEL_MANAGER.models[3]));
 
-	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.3f, 0.4f, MODEL_MANAGER.models[4]));
+	gameObjects.push_back(new GameObject(GetRandomPosition(), 0.2f, 0.4f, MODEL_MANAGER.models[4]));
 
 	//Set orbit objects 
 	orbitPrimitive.push_back(new OrbitPrimitive({ 1.f, .6f, 0.f, 0.f }, MODEL_MANAGER.models[5], 0.f, 1.f, 20.f, 1, true));

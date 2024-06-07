@@ -17,6 +17,13 @@ private:
 	ObjectManager(const ObjectManager&) = delete;
 	ObjectManager& operator =(const ObjectManager&) = delete;
 
+	Camera* camera;
+	Floor* floor;
+
+	std::vector<glm::vec3*> spawnPoints;
+	std::vector<GameObject*> gameObjects;
+	std::vector<OrbitPrimitive*> orbitPrimitive;
+
 public:
 
 	inline static ObjectManager& Instance()
@@ -25,13 +32,6 @@ public:
 		return objectManager;
 	}
 	~ObjectManager();
-
-	Camera* camera;
-	std::vector<glm::vec3*> spawnPoints;
-	std::vector<GameObject*> gameObjects;
-	std::vector<OrbitPrimitive*> orbitPrimitive;
-
-	Floor* floor;
 
 	void CreateSpwanPoint();
 	void CreateObjects();

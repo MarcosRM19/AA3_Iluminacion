@@ -22,6 +22,8 @@ private:
 
 	bool isActive, isPressing; 
 
+	float outerConeAngle, innerConeAngle, intensity;
+
 public:
 
 	Camera();
