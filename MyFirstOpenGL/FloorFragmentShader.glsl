@@ -3,18 +3,11 @@
 uniform vec2 windowSize;
 uniform sampler2D textureSampler;
 uniform vec3 sourceLight;
-uniform vec3 spotLight;
-uniform vec3 spotLightDirection;
 uniform float t;
+uniform float coeficientValue;
 
 uniform vec3 colorA;
 uniform vec3 colorB;
-
-uniform bool isActive;
-uniform float coeficientValue;
-uniform float intensity;
-uniform float outerConeAngle;
-uniform float innerConeAngle;
 
 in vec2 uvsFragmentShader;
 in vec3 normalsFragmentShader;
@@ -44,21 +37,6 @@ void main() {
             orbitColor =  baseColor.rgb * sourceLightAngle * ambientColor * coeficientValue; 
 
             color = orbitColor;
-
-            if(isActive)
-            {
-                vec3 lightDirNormalized = normalize(spotLightDirection);
-                vec3 fragToLight = normalize(spotLight - primitivePosition.xyz);
-
-                float distanceToCamera = length(spotLight - primitivePosition.xyz);
-
-                float attenuation = 1.0 / (distanceToCamera * distanceToCamera);
-                float theta = dot(lightDirNormalized, -fragToLight);
-
-                float spotlightEffect = smoothstep(cos(radians(outerConeAngle)), cos(radians(innerConeAngle)), theta);
-
-                 color += baseColor.rgb * spotlightEffect * attenuation * intensity;
-            }
 
         fragColor = vec4(color,1.0);
 }

@@ -18,21 +18,24 @@ void OrbitPrimitive::Update(float _dt)
 
 void OrbitPrimitive::ApplyLight()
 {
-	//Active the program used by the gameobjects affected by the lights
-	glUseProgram(PROGRAM_MANAGER.compiledPrograms[0]);
-
-	//Find out if the position of the orbit objects is upper the 0, that mean that is being seen and has to apply light to the gameobjects
-	if (transform.position.y > 0)
+	for (int i = 0; i < PROGRAM_MANAGER.compiledPrograms.size() - 1; i++)
 	{
-		glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "sourceLight"), 1, glm::value_ptr(transform.position));
-		glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "coeficientValue"), coeficientValue);
-	}
+		//Active the program used by the gameobjects affected by the lights
+		glUseProgram(PROGRAM_MANAGER.compiledPrograms[i]);
 
-	//Only 1 of the orbit objects going to calculate the interpolation to try to simplify the method
-	if (interpolateColor)
-	{
-		CalculateInterpolation();
-		glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "t"), alphaValue);
+		//Find out if the position of the orbit objects is upper the 0, that mean that is being seen and has to apply light to the gameobjects
+		if (transform.position.y > 0)
+		{
+			glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[i], "sourceLight"), 1, glm::value_ptr(transform.position));
+			glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[i], "coeficientValue"), coeficientValue);
+		}
+
+		//Only 1 of the orbit objects going to calculate the interpolation to try to simplify the method
+		if (interpolateColor)
+		{
+			CalculateInterpolation();
+			glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[i], "t"), alphaValue);
+		}
 	}
 }
 

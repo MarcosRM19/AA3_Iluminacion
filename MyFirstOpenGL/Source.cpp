@@ -26,6 +26,7 @@ void main()
 
 		//Compile shaders
 		PROGRAM_MANAGER.PushProgram("MyFirstVertexShader.glsl", "MyFirstGeometryShader.glsl", "MyFirstFragmentShader.glsl");
+		PROGRAM_MANAGER.PushProgram("MyFirstVertexShader.glsl", "MyFirstGeometryShader.glsl", "FloorFragmentShader.glsl");
 		PROGRAM_MANAGER.PushProgram("MyFirstVertexShader.glsl", "MyFirstGeometryShader.glsl", "PrimitiveFragmentShader.glsl");
 
 		//Declare GameObject instance

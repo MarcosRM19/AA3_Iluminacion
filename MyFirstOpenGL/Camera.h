@@ -20,7 +20,7 @@ private:
 
 	float yaw, pitch;
 
-	int isActive; 
+	bool isActive, isPressing; 
 
 public:
 

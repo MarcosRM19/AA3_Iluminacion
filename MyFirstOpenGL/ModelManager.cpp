@@ -4,7 +4,7 @@ ModelManager::ModelManager()
 {
 	//Create and push the models in the models vector
 	Texture* textureCube = new Texture("Assets/Textures/cube.png", GL_TEXTURE0, 0);
-	models.push_back(LoadOBJModel("Assets/Models/cube.obj", PROGRAM_MANAGER.compiledPrograms[0], textureCube, GL_TRIANGLES));
+	models.push_back(LoadOBJModel("Assets/Models/cube.obj", PROGRAM_MANAGER.compiledPrograms[1], textureCube, GL_TRIANGLES));
 
 	Texture* textureTroll = new Texture("Assets/Textures/Troll.png", GL_TEXTURE1, 1);
 	models.push_back(LoadOBJModel("Assets/Models/troll.obj", PROGRAM_MANAGER.compiledPrograms[0], textureTroll, GL_TRIANGLES));
@@ -34,7 +34,7 @@ ModelManager::ModelManager()
 		+0.2f, -0.2f, +0.2f, // 4
 		-0.2f, +0.2f, +0.2f, // 1
 		+0.2f, +0.2f, +0.2f  // 0
-		}, PROGRAM_MANAGER.compiledPrograms[1], nullptr, GL_TRIANGLE_STRIP)
+		}, PROGRAM_MANAGER.compiledPrograms[2], nullptr, GL_TRIANGLE_STRIP)
 	);
 }
 

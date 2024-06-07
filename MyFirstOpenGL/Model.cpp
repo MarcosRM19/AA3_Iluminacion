@@ -81,7 +81,7 @@ void Model::Render(Transform transform, glm::vec4 color)
     }
     else
     {
-        glUniform4fv(glGetUniformLocation(GetProgram(), "ambientColor"), 1, glm::value_ptr(color));
+        glUniform4fv(glGetUniformLocation(program, "ambientColor"), 1, glm::value_ptr(color));
     }
 
     ApplyMatrix(transform);
@@ -103,12 +103,12 @@ void Model::ApplyMatrix(Transform transform)
     glm::mat4 scaleMatrix = MatrixUtilities::GenerateScaleMatrix(transform.scale);
 
     //Assign initial values to the program
-    glUniform2f(glGetUniformLocation(GetProgram(), "windowSize"), WINDOW_WIDTH, WINDOW_HEIGHT);
+    glUniform2f(glGetUniformLocation(program, "windowSize"), WINDOW_WIDTH, WINDOW_HEIGHT);
 
     //Pass the matrixs
-    glUniformMatrix4fv(glGetUniformLocation(GetProgram(), "translationMatrix"), 1, GL_FALSE, glm::value_ptr(translationMatrix));
-    glUniformMatrix4fv(glGetUniformLocation(GetProgram(), "rotationMatrix"), 1, GL_FALSE, glm::value_ptr(rotationMatrix));
-    glUniformMatrix4fv(glGetUniformLocation(GetProgram(), "scaleMatrix"), 1, GL_FALSE, glm::value_ptr(scaleMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(program, "translationMatrix"), 1, GL_FALSE, glm::value_ptr(translationMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(program, "rotationMatrix"), 1, GL_FALSE, glm::value_ptr(rotationMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(program, "scaleMatrix"), 1, GL_FALSE, glm::value_ptr(scaleMatrix));
 }
 
 GLuint Model::GetProgram()

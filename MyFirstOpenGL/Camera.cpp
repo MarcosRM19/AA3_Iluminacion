@@ -32,9 +32,10 @@ void Camera::Update(float _dt)
 	glUseProgram(PROGRAM_MANAGER.compiledPrograms[0]);
 	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLight"), 1, glm::value_ptr(transform.position));
 	glUniform3fv(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "spotLightDirection"), 1, glm::value_ptr(transform.forward));
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "isActive"), isActive);
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "innerConeAngle"), glm::radians(12.5f));
-	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "outerConeAngle"), glm::radians(17.5f));
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "isActive"), (int)isActive);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "outerConeAngle"), 20.f);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "innerConeAngle"), 10.f);
+	glUniform1f(glGetUniformLocation(PROGRAM_MANAGER.compiledPrograms[0], "intensity"), 0.7);
 }
 
 void Camera::Inputs(GLFWwindow* _window, float _dt)
@@ -56,12 +57,14 @@ void Camera::Inputs(GLFWwindow* _window, float _dt)
 	{
 		transform.position += glm::normalize(glm::cross(transform.forward, transform.up)) * cameraSpeed * _dt;
 	}
-	if (INPUT_MANAGER.IsKeyPressed(GLFW_KEY_F))
+	if (INPUT_MANAGER.IsKeyPressed(GLFW_KEY_F) && !isPressing)
 	{
-		if (isActive == 1)
-			isActive = 0;
-		else
-			isActive = 1;
+		isActive = !isActive;
+		isPressing = true;
+	}
+	if (!INPUT_MANAGER.IsKeyPressed(GLFW_KEY_F) && isPressing)
+	{
+		isPressing = false;
 	}
 
 	//Function that rotate de camera with the information of xPos and yPos
