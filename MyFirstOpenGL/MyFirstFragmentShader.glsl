@@ -48,12 +48,12 @@ void main() {
             if(isActive)
             {
                 vec3 lightDirNormalized = normalize(spotLightDirection);
-                vec3 fragToLight = normalize(spotLight - primitivePosition.xyz);
+                vec3 LineToFlashLight = normalize(spotLight - primitivePosition.xyz);
 
                 float distanceToCamera = length(spotLight - primitivePosition.xyz);
 
                 float attenuation = 1.0 / (distanceToCamera * distanceToCamera);
-                float theta = dot(lightDirNormalized, -fragToLight);
+                float theta = dot(lightDirNormalized, -LineToFlashLight);
 
                 float spotlightEffect = smoothstep(cos(radians(outerConeAngle)), cos(radians(innerConeAngle)), theta);
 
