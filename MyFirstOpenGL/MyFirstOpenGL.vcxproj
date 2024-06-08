@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FlashLight.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GLManager.cpp" />
@@ -46,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="FlashLight.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GLManager.h" />

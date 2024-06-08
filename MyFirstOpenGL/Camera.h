@@ -1,6 +1,6 @@
 #pragma once
 #include "Object.h"
-#include "ProgramManager.h"
+#include "FlashLight.h"
 #include "InputManager.h"
 
 class Camera : public Object
@@ -21,12 +21,12 @@ private:
 	float yaw, pitch;
 
 	bool isActive, isPressing; 
-
-	float outerConeAngle, innerConeAngle, intensity;
+	FlashLight* flashLight;
 
 public:
 
 	Camera();
+	~Camera();
 
 	virtual void Update(float _dt) override;
 
