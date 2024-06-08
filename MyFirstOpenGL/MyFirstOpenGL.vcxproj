@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,17 +19,50 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FlashLight.cpp" />
+    <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GLManager.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="MatrixUtilities.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelManager.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="OrbitPrimitive.cpp" />
+    <ClCompile Include="ProgramManager.cpp" />
+    <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Stb.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FloorFragmentShader.glsl" />
     <None Include="MyFirstFragmentShader.glsl" />
     <None Include="MyFirstGeometryShader.glsl" />
     <None Include="MyFirstVertexShader.glsl" />
+    <None Include="PrimitiveFragmentShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="FlashLight.h" />
+    <ClInclude Include="Floor.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GLManager.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="MatrixUtilities.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelManager.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="OrbitPrimitive.h" />
+    <ClInclude Include="ProgramManager.h" />
+    <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
